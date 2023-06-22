@@ -1,0 +1,179 @@
+#include <iostream>
+
+using namespace std;
+
+// Weapon class
+class Weapon {
+private:
+    int strength;   // Strength of the weapon
+    char type;      // Type of the weapon (r = Rock, p = Paper, s = Scissor)
+    int modified;   // Modified strength after battle
+
+public:
+    Weapon() {
+        strength = 0;
+        type = '0';
+        modified = 0;
+    }
+
+    void setPower(const int& pwr) {
+        strength = pwr;
+    }
+
+    void setType(const char& t) {
+        type = t;
+    }
+
+    void setModified(const int& mod) {
+        modified = mod;
+    }
+
+    int getStrength() const {
+        return strength;
+    }
+
+    char getType() const {
+        return type;
+    }
+
+    int getModified() const {
+        return modified;
+    }
+};
+
+// Rock class derived from Weapon
+class Rock : public Weapon {
+public:
+    Rock() {
+        int rock;
+        cout << "Rock's strength? ";
+        cin >> rock;
+        setPower(rock);
+        setType('r');
+        setModified(rock);
+    }
+
+    // Battle method for Rock
+    bool battle(Weapon& otherWeapon);
+};
+
+bool Rock::battle(Weapon& otherWeapon) {
+    if (otherWeapon.getType() == 's') {
+        // Rock vs Scissor
+        setModified(getStrength() * 2);             // Rock's modified strength is doubled
+        otherWeapon.setModified(otherWeapon.getStrength() / 2);  // Scissor's modified strength is halved
+
+        if (getModified() <= otherWeapon.getModified())
+            return false;   // Rock loses
+        else
+            return true;    // Rock wins
+    }
+    else if (otherWeapon.getType() == 'p') {
+        // Rock vs Paper
+        setModified(getStrength() / 2);             // Rock's modified strength is halved
+        otherWeapon.setModified(otherWeapon.getModified() * 2);  // Paper's modified strength is doubled
+
+        if (getModified() <= otherWeapon.getModified())
+            return false;   // Rock loses
+        else
+            return true;    // Rock wins
+    }
+
+    return false;   // Rock loses (default case)
+}
+
+// Paper class derived from Weapon
+class Paper : public Weapon {
+public:
+    Paper() {
+        int paper;
+        cout << "Paper's strength? ";
+        cin >> paper;
+        setPower(paper);
+        setType('p');
+        setModified(paper);
+    }
+
+    // Battle method for Paper
+    bool battle(Weapon& otherWeapon);
+};
+
+bool Paper::battle(Weapon& otherWeapon) {
+    if (otherWeapon.getType() == 'r') {
+        // Paper vs Rock
+        setModified(getStrength() * 2);             // Paper's modified strength is doubled
+        otherWeapon.setModified(otherWeapon.getStrength() / 2);  // Rock's modified strength is halved
+
+        if (getModified() <= otherWeapon.getModified())
+            return false;   // Paper loses
+        else
+            return true;    // Paper wins
+    }
+    else if (otherWeapon.getType() == 's') {
+        // Paper vs Scissor
+        setModified(getStrength() / 2);             // Paper's modified strength is halved
+        otherWeapon.setModified(otherWeapon.getModified() * 2);  // Scissor's modified strength is doubled
+
+        if (getModified() <= otherWeapon.getModified())
+            return false;   // Paper loses
+        else
+            return true;    // Paper wins
+    }
+
+    return false;   // Paper loses (default case)
+}
+
+// Scissor class derived from Weapon
+class Scissor : public Weapon {
+public:
+    Scissor() {
+        int scissor;
+        cout << "Scissor's strength? ";
+        cin >> scissor;
+        setPower(scissor);
+        setType('s');
+        setModified(scissor);
+    }
+
+    // Battle method for Scissor
+    bool battle(Weapon& otherWeapon);
+};
+
+bool Scissor::battle(Weapon& otherWeapon) {
+    if (otherWeapon.getType() == 'p') {
+        // Scissor vs Paper
+        setModified(getStrength() * 2);             // Scissor's modified strength is doubled
+        otherWeapon.setModified(otherWeapon.getStrength() / 2);  // Paper's modified strength is halved
+
+        if (getModified() <= otherWeapon.getModified())
+            return false;   // Scissor loses
+        else
+            return true;    // Scissor wins
+    }
+    else if (otherWeapon.getType() == 'r') {
+        // Scissor vs Rock
+        setModified(getStrength() / 2);             // Scissor's modified strength is halved
+        otherWeapon.setModified(otherWeapon.getModified() * 2);  // Rock's modified strength is doubled
+
+        if (getModified() <= otherWeapon.getModified())
+            return false;   // Scissor loses
+        else
+            return true;    // Scissor wins
+    }
+
+    return false;   // Scissor loses (default case)
+}
+
+int main() {
+    // Create instances of Rock, Paper, and Scissor
+    Rock rock;
+    Paper paper;
+    Scissor scissor;
+
+    // Battle simulations
+    cout << "Battle 1 - Rock vs Paper: \n\t" << (rock.battle(paper) ? "Rock" : "Paper") << " wins!\n\n";
+    cout << "Battle 2 - Paper vs Scissors: \n\t" << (paper.battle(scissor) ? "Paper" : "Scissors") << " wins!\n\n";
+    cout << "Battle 3 - Scissors vs Rock: \n\t" << (scissor.battle(rock) ? "Scissors" : "Rock") << " wins!\n\n";
+
+    return 0;
+}
