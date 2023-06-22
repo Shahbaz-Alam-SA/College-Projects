@@ -7,7 +7,7 @@ Projects
 The following projects are included in this portfolio: 
  
 
-Project A: Rock, Paper, Scissor Game 
+Project A: Rock, Paper, Scissor Game : This code is a simple implementation of the rock-paper-scissors game using classes and inheritance in C++. It simulates battles between different weapons (rock, paper, and scissors) and determines the winner based on their strengths and types.
 
 Project B: 
 
