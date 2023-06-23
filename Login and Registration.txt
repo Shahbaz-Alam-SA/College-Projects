@@ -1,0 +1,83 @@
+#include <iostream>
+#include <map>
+#include <string>
+
+using namespace std;
+
+// User class
+class User {
+private:
+    string username;             // User's username
+    string password;             // User's password
+
+public:
+    User(const string& uname, const string& pwd)    // Constructor
+        : username(uname), password(pwd) {}
+
+    string getUsername() const {                   // Getter for username
+        return username;
+    }
+
+    bool validatePassword(const string& pwd) const {    // Validate provided password against stored password
+        return password == pwd;
+    }
+};
+
+// Authentication class
+class Authentication {
+private:
+    map<string, User> users;            // Map to store users
+
+public:
+    void registerUser(const string& username, const string& password) {   // Register a new user
+        User newUser(username, password);
+        users.insert(make_pair(username, newUser));
+        cout << "Registration successful!" << endl;
+    }
+
+    bool loginUser(const string& username, const string& password) {      // Login with provided credentials
+        auto it = users.find(username);
+        if (it != users.end()) {                      // User found
+            if (it->second.validatePassword(password)) {     // Validate password
+                cout << "Login successful!" << endl;
+                return true;
+            } else {
+                cout << "Invalid password." << endl;
+            }
+        } else {
+            cout << "User not found." << endl;
+        }
+        return false;
+    }
+};
+
+// Main function
+int main() {
+    Authentication authentication;
+
+    // Registration
+    cout << "=== Registration ===" << endl;
+    string regUsername, regPassword;
+
+    cout << "Enter username: ";
+    cin >> regUsername;
+
+    cout << "Enter password: ";
+    cin >> regPassword;
+
+    authentication.registerUser(regUsername, regPassword);
+
+    // Login
+    cout << "=== Login ===" << endl;
+    string loginUsername, loginPassword;
+
+    cout << "Enter username: ";
+    cin >> loginUsername;
+
+    cout << "Enter password: ";
+    cin >> loginPassword;
+
+    authentication.loginUser(loginUsername, loginPassword);
+
+    return 0;
+}
